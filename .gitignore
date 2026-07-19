@@ -1,0 +1,12 @@
+node_modules/
+dist/
+android/
+ios/
+*.log
+
+# Never commit real financial data or exports.
+*.xml
+kuber-backup-*.json
+kuber-transactions-*.csv
+kuber-*-*.csv
+.env

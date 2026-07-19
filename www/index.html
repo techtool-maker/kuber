@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Kuber — an automatic personal finance assistant. Import your bank SMS, and everything else happens by itself.">
+<meta name="theme-color" content="#0b100e">
+<title>Kuber — Automatic Finance</title>
+
+<link rel="manifest" href="manifest.webmanifest">
+
+<!-- iOS home-screen web app. Safari ignores the manifest for these, so the
+     Apple-specific tags are required, not duplicative. -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Kuber">
+<meta name="mobile-web-app-capable" content="yes">
+<link rel="apple-touch-icon" href="icons/icon-180.png">
+<link rel="apple-touch-icon" sizes="152x152" href="icons/icon-152.png">
+<link rel="apple-touch-icon" sizes="167x167" href="icons/icon-167.png">
+<link rel="apple-touch-icon" sizes="180x180" href="icons/icon-180.png">
+<link rel="icon" href="icons/icon-192.png">
+
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="logo"><span class="mark">₹</span> Kuber</div>
+  <div class="spacer"></div>
+  <button class="icon-btn" id="btnTheme" title="Toggle theme" aria-label="Toggle theme">◐</button>
+  <button class="icon-btn" id="btnImport" title="Import data" aria-label="Import data">⬇</button>
+  <button class="icon-btn" id="btnSettings" title="Settings" aria-label="Settings">⚙</button>
+</header>
+
+<main class="app">
+
+  <!-- ============ HOME ============ -->
+  <section class="view active" id="view-home">
+    <div id="homeContent"></div>
+  </section>
+
+  <!-- ============ TIMELINE ============ -->
+  <section class="view" id="view-timeline">
+    <div class="view-head"><h1>Transactions</h1><span class="sub" id="timelineCount"></span></div>
+    <div class="search-bar">
+      <span class="ico">🔎</span>
+      <input type="text" id="searchInput" placeholder="Try: swiggy, fuel above 1000, upi, last month…" autocomplete="off">
+    </div>
+    <div class="chips" id="filterChips"></div>
+    <div id="timelineList"></div>
+  </section>
+
+  <!-- ============ INSIGHTS ============ -->
+  <section class="view" id="view-insights">
+    <div class="view-head"><h1>Insights</h1></div>
+    <div id="insightsContent"></div>
+  </section>
+
+  <!-- ============ ASSISTANT ============ -->
+  <section class="view" id="view-assistant">
+    <div class="view-head"><h1>Ask Kuber</h1></div>
+    <div id="assistantContent"></div>
+  </section>
+
+  <!-- ============ PLAN ============ -->
+  <section class="view" id="view-plan">
+    <div class="view-head"><h1>Plan</h1></div>
+    <div id="planContent"></div>
+  </section>
+
+</main>
+
+<nav class="nav" role="tablist">
+  <button data-view="home" class="active"><span class="ico">◉</span>Home</button>
+  <button data-view="timeline"><span class="ico">≡</span>Activity</button>
+  <button data-view="insights"><span class="ico">✦</span>Insights<span class="badge" id="reviewBadge" hidden>0</span></button>
+  <button data-view="assistant"><span class="ico">✨</span>Ask</button>
+  <button data-view="plan"><span class="ico">◎</span>Plan</button>
+</nav>
+
+<div id="modalRoot"></div>
+<div id="toastRoot"></div>
+
+<script type="module" src="js/app.js"></script>
+<script>
+  // Registered outside the module so a service-worker failure can never stop
+  // the app itself from booting.
+  if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('sw.js', { scope: './' }).catch(() => {});
+    });
+  }
+</script>
+</body>
+</html>

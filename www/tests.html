@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kuber — Engine tests</title>
+<link rel="stylesheet" href="css/app.css">
+<style>
+  body { padding: 20px; padding-bottom: 40px; }
+  .app { max-width: 900px; }
+  .case { display: flex; gap: 10px; padding: 7px 0; border-bottom: 1px solid var(--border); font-size: 0.84rem; align-items: flex-start; }
+  .case .mark { flex: none; width: 18px; font-weight: 700; }
+  .case.pass .mark { color: var(--income); }
+  .case.fail .mark { color: var(--spend); }
+  .case .detail { flex: 1; min-width: 0; }
+  .case .why { color: var(--spend); font-size: 0.78rem; margin-top: 2px; }
+  .case .raw { color: var(--text-3); font-size: 0.74rem; font-family: ui-monospace, monospace; margin-top: 2px; word-break: break-word; }
+  .summary { font-size: 1.15rem; font-weight: 700; padding: 14px 0; }
+</style>
+</head>
+<body>
+<div class="app">
+  <h1>Kuber engine tests</h1>
+  <p class="muted mb">Regression suite for the parsing, merchant-matching and categorisation layers. Open this after changing anything in <code>js/engine/</code> or <code>js/data/</code>.</p>
+  <div id="out"></div>
+</div>
+<script type="module" src="js/tests.js"></script>
+</body>
+</html>
