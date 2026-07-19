@@ -6,7 +6,30 @@ This is **v1: a local-first web app**. Everything runs in your browser, on your 
 
 ---
 
-## Run it
+## Use it on iPhone / iPad
+
+**<https://techtool-maker.github.io/kuber/>**
+
+Open that in Safari, then **Share → Add to Home Screen**. It runs full-screen with no browser chrome, works offline, and behaves like an installed app.
+
+There is no native iOS build and there will not be one: installing an unsigned `.ipa` requires an Apple Developer account. The PWA is the supported path — same as Wobble.
+
+### Read this before you rely on it
+
+**Safari deletes web-app data.** Intelligent Tracking Prevention clears `localStorage` after roughly seven days without visiting a site. That would silently erase your entire transaction history.
+
+Two things follow:
+
+1. **Add it to the Home Screen.** Home-screen web apps are retained far longer than ordinary Safari tabs. The app detects this and nags you if you have not.
+2. **Export a backup periodically.** Settings → Export backup, then *Save to Files*. Home-screen status reduces the risk; it does not remove it, because iOS can still evict storage when the device is low on space, without warning. Restore by dropping the JSON back into Import.
+
+The app requests persistent storage on launch, which Chrome honours. Safari does not meaningfully implement it, which is why the warnings above exist.
+
+To preview the iOS banners from a desktop browser: `?ios=1` for the Safari-tab version, `?ios=standalone` for the home-screen one.
+
+---
+
+## Run it locally
 
 ```powershell
 cd C:\Users\TyagiKe\Kuber
@@ -77,6 +100,7 @@ Corrections you make are permanent and deterministic: recategorising a merchant 
 | Dashboard, timeline, insights, charts, calendar heatmap | Working |
 | CSV exports: transactions, monthly, category, subscription, tax | Working |
 | Dark/light, mobile-first layout | Working |
+| Installable PWA, offline, iOS home-screen | Working |
 | Email parsing, bank APIs, Account Aggregator | Not built — see below |
 | Push notifications, family mode, receipt OCR | Not built |
 
@@ -107,9 +131,13 @@ The path is already proven on this machine by Wobble: **no local Android SDK, AP
 ```
 Kuber/
 ├── serve.ps1              static server, port 5600
+├── .github/workflows/     deploy-pages.yml → GitHub Pages on push to main
 ├── www/
 │   ├── index.html         app shell
 │   ├── tests.html         regression suite
+│   ├── manifest.webmanifest
+│   ├── sw.js              service worker (network-first for app code)
+│   ├── icons/             PWA + apple-touch icons
 │   ├── css/app.css        design tokens + components
 │   └── js/
 │       ├── app.js         views, modals, import/export
